@@ -53,7 +53,7 @@ def crossing_number_validation(xn):
         r = p % 22
 
         # Use the dictionary key to get the corresponding alpha value and check
-        # if ths input value matches the excepted result.
+        # if ths input value matches the expected result.
         if xn == (xn[0:6] + key[r]):
             return True
         else:
