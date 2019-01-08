@@ -1,5 +1,5 @@
-# rail-crossing-number-validator
-This code checks if a highway-rail grade crossing number is valid.
+# Highway Rail Crossing Number Validator
+This checks if a highway-rail grade crossing number is valid.
 
 Usage:
 
