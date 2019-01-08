@@ -70,7 +70,6 @@ while True:
 
     value = crossing_number_validation(xn)
 
-
     if value is True:
         print("This crossing number is VALID.")
         print("Please enter another crossing number or type \'q\' to quit. \n")
