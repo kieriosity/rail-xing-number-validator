@@ -1,7 +1,7 @@
 import re
 
 
-def crossing_number_validation(xn):
+def crossing_number_validation(xing_number):
     """
     The crossing_validator function takes a crossing input variable and then
     calculates if the value is valid.
@@ -32,7 +32,7 @@ def crossing_number_validation(xn):
     # Check the input format to ensure that it follows the correct pattern, e.g.
     # NNNNNNA. If it doesn't, return False otherwise continue with validation
     # steps.
-    if format.match(xn):
+    if format.match(xing_number):
         # Define dictionary that contains key value pair to lookup the letter value
         # in the crossing number
         key = {
@@ -41,20 +41,19 @@ def crossing_number_validation(xn):
             17: 'R', 18: 'S', 19: 'T', 20: 'U', 21: 'V', 22: 'W', 23: 'X', 24: 'Y',
             25: 'Z',
         }
-
-        # p = product,  m = multiplier
-        p, m = 0, 1
+       
+        product, multiplier = 0, 1
 
         # Iterate through the first six digits and compute the total and remainder
         # based on the formula in steps 1 and 2.
-        for i in xn[0:6]:
-            p = (int(i) * m) + p
-            m += 1
-        r = p % 22
+        for i in xing_number[0:6]:
+            product = (int(i) * multiplier) + product
+            multiplier += 1
+        remainder = product % 22
 
         # Use the dictionary key to get the corresponding alpha value and check
         # if ths input value matches the expected result.
-        if xn == (xn[0:6] + key[r]):
+        if xing_number == (xing_number[0:6] + key[remainder]):
             return True
         else:
             return False
