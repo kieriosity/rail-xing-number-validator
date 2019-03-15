@@ -27,12 +27,12 @@ def crossing_number_validation(xing_number):
     """
 
     # Define the valid input format regex
-    format = re.compile("\d{6}[A-Z]{1}")
+    xing_format = re.compile("\d{6}[A-Z]{1}")
 
     # Check the input format to ensure that it follows the correct pattern, e.g.
     # NNNNNNA. If it doesn't, return False otherwise continue with validation
     # steps.
-    if format.match(xing_number):
+    if xing_format.match(xing_number):
         # Define dictionary that contains key value pair to lookup the letter value
         # in the crossing number
         key = {
