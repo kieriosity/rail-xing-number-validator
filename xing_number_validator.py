@@ -40,8 +40,7 @@ def crossing_number_validation(xing_number):
             9: 'J', 10: 'K', 11: 'L', 12: 'M', 13: 'N', 14: 'O', 15: 'P', 16: 'Q',
             17: 'R', 18: 'S', 19: 'T', 20: 'U', 21: 'V', 22: 'W', 23: 'X', 24: 'Y',
             25: 'Z',
-        }
-        
+        }        
         product, multiplier = 0, 1
 
         # Iterate through the first six digits and compute the total and remainder
@@ -57,6 +56,5 @@ def crossing_number_validation(xing_number):
             return True
         else:
             return False
-
     else:
         return False
