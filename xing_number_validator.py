@@ -1,60 +1,54 @@
 import re
 
-
 def crossing_number_validation(xing_number):
     """
-    The crossing_validator function takes a crossing input variable and then
-    calculates if the value is valid.
+    Validates a crossing number based on specific rules.
 
-    Calculating a valid crossing number:
+    A valid crossing number consists of six digits followed by an uppercase letter.
+    The letter is determined by a checksum algorithm.
 
-    Example crossing number:  836597H
+    Steps to Validate:
+    1. Compute the Total Numeric Value:
+        Sum of each digit multiplied by its position (1-based).
+    2. Find Remainder when divided by 22.
+    3. Map the remainder to the corresponding uppercase letter.
+    4. The letter in the input must match the mapped letter.
 
-    Step 1. Compute the Total Numeric Value
-        = [(8x1) + (3x2) + (6x3) + (5x4) + (9x5) + (7x6)]
-        = (8 + 6 + 18 + 20 + 45 + 42)
-        = 139
-    Step 2. Find Remainder for the Alpha Code.
-        = 139 - (subtract multiples of 22 until you get a number that is less
-                 than 22)
-        = 139 - (22 x 6)
-        = 139 - 132
-        = 7
-    Step 3. Determine the Valid Alpha Code
-        The remainder “7” corresponds to the Alpha Code letter “H” (see key
-        dictionary). Therefore, the inventory number # 836 597 H in Figure 1 is
-        valid.
+    Example:
+        Input: 836597H
+        Calculation:
+            (8*1) + (3*2) + (6*3) + (5*4) + (9*5) + (7*6) = 139
+            139 % 22 = 7
+            Corresponding Letter: 'H'
+        Result: Valid
     """
-
+    
     # Define the valid input format regex
-    xing_format = re.compile("\d{6}[A-Z]{1}")
+    xing_format = re.compile(r"^\d{6}[A-Z]$")
 
-    # Check the input format to ensure that it follows the correct pattern, e.g.
-    # NNNNNNA. If it doesn't, return False otherwise continue with validation
-    # steps.
-    if xing_format.match(xing_number):
-        # Define dictionary that contains key value pair to lookup the letter value
-        # in the crossing number
-        key = {
-            0: 'A', 1: 'B', 2: 'C', 3: 'D', 4: 'E', 5: 'F', 6: 'G', 7: 'H', 8: 'I',
-            9: 'J', 10: 'K', 11: 'L', 12: 'M', 13: 'N', 14: 'O', 15: 'P', 16: 'Q',
-            17: 'R', 18: 'S', 19: 'T', 20: 'U', 21: 'V', 22: 'W', 23: 'X', 24: 'Y',
-            25: 'Z',
-        }
-        product, multiplier = 0, 1
+    # Convert input to uppercase to ensure consistency
+    xing_number = xing_number.upper()
 
-        # Iterate through the first six digits and compute the total and remainder
-        # based on the formula in steps 1 and 2.
-        for i in xing_number[0:6]:
-            product = (int(i) * multiplier) + product
-            multiplier += 1
-        remainder = product % 22
-
-        # Use the dictionary key to get the corresponding alpha value and check
-        # if ths input value matches the expected result.
-        if xing_number == (xing_number[0:6] + key[remainder]):
-            return True
-        else:
-            return False
-    else:
+    # Check the input format to ensure that it follows the correct pattern
+    if not xing_format.match(xing_number):
         return False
+
+    # Define the key string for mapping remainders to letters
+    key = "ABCDEFGHIJKLMNOPQRSTUV"
+
+    # Compute the total using a generator expression with enumerate
+    total = sum(int(digit) * (index + 1) for index, digit in enumerate(xing_number[:6]))
+    
+    # Calculate the remainder
+    remainder = total % 22
+
+    # Ensure the remainder is within the key's range
+    if remainder >= len(key):
+        return False  # This should not happen if key length matches modulo base
+
+    # Get the expected letter from the key
+    expected_letter = key[remainder]
+
+    # Validate the letter
+    return xing_number[-1] == expected_letter
+
